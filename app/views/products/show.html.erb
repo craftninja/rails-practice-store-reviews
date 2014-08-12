@@ -4,16 +4,23 @@
       <img src='<%= @product.image_url.url %>'>
     </div>
   <% end %>
-  <%= render partial: 'product_description', locals: {product: @product} %>
+  <%= render partial: 'products/product_description', locals: {product: @product} %>
   <div class="review-form">
+    <% if @review.errors.any? %>
+      <div id="error_explanation">
+        <h2>Oh no! Your review was not shared with the world yet!</h2>
+          <% @review.errors.full_messages.each do |msg| %>
+            <p class="errors"><%= msg %></p>
+          <% end %>
+      </div>
+    <% end %>
     <%= form_for [@product, @review] do |f| %>
       <div>
       <%= f.text_area :description, placeholder: 'what did you think?' %>
       </div>
       <div>
         <%= f.label :stars %>
-        <%= f.select :stars, %w(1 2 3 4 5) %>
-
+        <%= f.select :stars, ["", 1, 2, 3, 4, 5] %>
         <%= f.submit "Submit Review" %>
       </div>
     <% end %>
