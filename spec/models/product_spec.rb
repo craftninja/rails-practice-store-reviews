@@ -35,4 +35,20 @@ describe Product do
 
     expect(@new_product.valid?).to eq false
   end
+
+  it 'validates rating presence of stars and description' do
+    @new_product.author_id = @author.id
+    @new_product.publisher_id = @publisher.id
+    @new_product.save!
+
+    review = Review.new
+    review.user_id = 1
+    review.product_id = @new_product.id
+    expect(review.valid?).to be(false)
+    review.description = 'Amazing!'
+    expect(review.valid?).to be(false)
+    review.stars = 5
+    expect(review.valid?).to be(true)
+  end
+
 end

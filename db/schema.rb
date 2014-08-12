@@ -58,10 +58,10 @@ ActiveRecord::Schema.define(version: 20140812154744) do
   end
 
   create_table "reviews", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "product_id"
-    t.string   "description"
-    t.integer  "stars"
+    t.integer  "user_id",     null: false
+    t.integer  "product_id",  null: false
+    t.string   "description", null: false
+    t.integer  "stars",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
