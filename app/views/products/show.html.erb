@@ -32,7 +32,7 @@
       <span class="time">
       <%= time_ago_in_words(review.created_at) %> ago
       </span>
-      <blockquote><%= review.description %></blockquote>
+      <blockquote><%= simple_format review.description %></blockquote>
     </div>
   <% end %>
 </div>
