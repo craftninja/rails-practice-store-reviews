@@ -117,4 +117,31 @@ feature 'shopping for products' do
     expect(current_path).to eq '/'
     expect(page).to have_content 'Access Denied'
   end
+
+  scenario 'Users can leave reviews' do
+    author = Author.create!(first_name: 'Arthur', last_name: 'Radcliffe')
+    publisher = Publisher.create!(name: 'Arthur Books', city: 'Denver')
+    product = Product.create!(
+      name: 'Test Book',
+      hardcover_price_in_cents: 1000,
+      softcover_price_in_cents: 800,
+      description: 'This is a description',
+      image_url: 'http://fc04.deviantart.net/fs70/f/2012/306/d/c/fahrenheit_451__movie_poster_by_trzytrzy-d5jrq21.jpg',
+      published_date: '1/1/2010',
+      author_id: author.id,
+      publisher_id: publisher.id
+    )
+    non_admin = User.create!(email: 'admin@example.com', password: 'password1', admin: false)
+    log_in(non_admin)
+
+    visit '/'
+    click_on product.name
+    fill_in 'what did you think?', with: 'Soooooo great'
+    select '4', from: 'Stars'
+    click_on 'Submit Review'
+    expect(page).to have_content(non_admin.email)
+    expect(page).to have_content('4 stars')
+    expect(page).to have_content('Soooooo great')
+  end
+
 end

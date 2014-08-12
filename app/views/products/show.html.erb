@@ -1,9 +1,32 @@
 <div class="product">
   <% if @product.image_url.present? %>
-      <div class="product_picture_large">
-        <img src='<%= @product.image_url.url %>'>
-      </div>
+    <div class="product_picture_large">
+      <img src='<%= @product.image_url.url %>'>
+    </div>
   <% end %>
   <%= render partial: 'product_description', locals: {product: @product} %>
+  <div class="review-form">
+    <%= form_for [@product, @review] do |f| %>
+      <div>
+      <%= f.text_area :description, placeholder: 'what did you think?' %>
+      </div>
+      <div>
+        <%= f.label :stars %>
+        <%= f.select :stars, %w(1 2 3 4 5) %>
+
+        <%= f.submit "Submit Review" %>
+      </div>
+    <% end %>
+  </div>
+  <% @product.reviews.each do |review| %>
+    <div class="review">
+      <%= review.user.email %>
+      <%= review.stars %> stars
+      <span class="time">
+      <%= time_ago_in_words(review.created_at) %> ago
+      </span>
+      <blockquote><%= review.description %></blockquote>
+    </div>
+  <% end %>
 </div>
 

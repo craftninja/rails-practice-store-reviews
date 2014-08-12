@@ -3,6 +3,7 @@ class Product < ActiveRecord::Base
   mount_uploader :image_url, ImageUploader
   belongs_to :author
   belongs_to :publisher
+  has_many :reviews
   has_many :cart_items
   has_many :carts, :through => :cart_items
 
