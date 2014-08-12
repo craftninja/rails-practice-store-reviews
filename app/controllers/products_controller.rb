@@ -33,10 +33,11 @@ class ProductsController < ApplicationController
 
   private
   def allowed_parameters
-    params.require(:product).permit(:name, :hardcover_price,
-                                    :softcover_price, :image_url,
-                                    :description, :published_date,
-                                    :author_id, :publisher_id
-                                    )
+    params.require(:product).permit(
+      :name, :hardcover_price,
+      :softcover_price, :image_url,
+      :description, :published_date,
+      :author_id, :publisher_id
+    )
   end
 end
